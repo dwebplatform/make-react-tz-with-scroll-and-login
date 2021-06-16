@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './main.scss';
+import { RegisterForm } from './components/RegisterForm';
+import { Friends } from './components/Friends';
+import { useSelector } from 'react-redux';
+const EmptyBox = () => {
+  return (<div className="empty">
+    Зарегистрируйтесь чтобы увидеть контент
+  </div>);
+}
 function App() {
+  const { isLoggedIn } = useSelector(state => state.logins);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="main">
+      <div className="main__register">
+        <RegisterForm />
+      </div>
+      <div className="main__user-data">
+        {isLoggedIn && <Friends />}
+        {!isLoggedIn && <EmptyBox />}
+      </div>
+    </main>
   );
 }
 
