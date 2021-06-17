@@ -5,16 +5,18 @@ import loadingImg from '../../img/loading.gif'
 export const RegisterForm = () => {
 
   const [userData, setUserData] = useState({
-    name: '',
+    // eve.holt@reqres.in
     email: '',
+    // cityslicka
+    password: ''
   });
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(userData));
     setUserData({
-      name: '',
-      email: ''
+      email: '',
+      password: ''
     })
   }
   const handleChange = (e) => {
@@ -25,7 +27,7 @@ export const RegisterForm = () => {
       }
     })
   }
-  const { name, email } = userData;
+  const { password, email } = userData;
   const { error, isLoggedIn, isLoading } = useSelector((state) => state.logins);
   const handleLogOut = (e) => {
     e.preventDefault();
@@ -36,14 +38,14 @@ export const RegisterForm = () => {
       {isLoggedIn && <div style={{ color: 'green' }}>Поздравляем вы зарегистрировались</div>}
       {error && <div style={{ color: 'red' }}>{error.msg}</div>}
       <div className="register__input-wrapper">
-        <input placeholder="Введите имя:" name="name" type="text" value={name || ''} onChange={handleChange} />
+        <input placeholder="Введите пароль:" type="password" name="password" type="text" value={password || ''} onChange={handleChange} />
       </div>
       <div className="register__input-wrapper">
         <input placeholder="Введите e-mail:" name="email" type="email" value={email || ''} onChange={handleChange} />
       </div>
-      <button className="register__submit-btn" type="submit" disabled={isLoading}>{isLoading ?
+      {!isLoggedIn && <button className="register__submit-btn" type="submit" disabled={isLoading}>{isLoading ?
         <img src={loadingImg} style={{ width: '10px', }} />
-        : 'Зарегистрироваться'}</button>
+        : 'Зарегистрироваться'}</button>}
       {isLoggedIn && <button className="register__logout-btn" onClick={(e) => { handleLogOut(e); }}>Выйти</button>}
     </form >
   );

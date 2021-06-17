@@ -1,5 +1,5 @@
 
-const checkLoggedIn = localStorage.getItem('isLoggedIn') ? true : false;
+const checkLoggedIn = localStorage.getItem('token') ? true : false;
 const initialState = {
   // TODO: make with storage
   error: null,
@@ -15,6 +15,7 @@ export const loginReducer = (state = initialState, action) => {
       }
     case "LOGOUT":
       localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('token');
       return {
         ...state,
         isLoggedIn: false
@@ -24,11 +25,11 @@ export const loginReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: {
-          msg: 'Не верны введены данные'
+          msg: action.msg
         }
       };
     case "LOGIN_SUCCESS":
-      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('token', action.token);
       return {
         isLoggedIn: true,
         isLoading: false,
